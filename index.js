@@ -118,6 +118,13 @@ const GetNewFactHandler = {
 
         const randomFact = await getTongueTwister();
 
+        // Use AttributeManager to save response (in session data) in case asked for a repeat (17-274)
+        const attributesManager = handlerInput.attributesManager;
+        let sessionAttributes = attributesManager.getSessionAttributes();
+        sessionAttributes.lastSpeech = randomFact;      // store the random fun-liner in suitably named session variable (17-274)
+        attributesManager.setSessionAttributes(sessionAttributes);      // finally save session data thus
+
+
         // Nicely assemble something for Alexa to say
         const speechOutput = GET_FACT_MESSAGE + randomFact + CONTINUE_REPROMPT;
 
@@ -136,6 +143,39 @@ const getTongueTwister = async () => {
     let result = DATA[selectedIndex];
     return result;
 } 
+
+// TODO: Add Custom Handler Definitions
+// 17-274 Writing the Repeat Intent handler
+// Handle both Intent requests ("tell me a fun liner") and Launch requests ("start fun liners")
+const RepeatHandler = {
+    canHandle(handlerInput) {
+        const request = handlerInput.requestEnvelope.request;
+        return request.type === 'IntentRequest' && request.intent.name === 'AMAZON.RepeatIntent';
+        // logic simpler here - just the Repeat intent request
+    },
+    handle(handlerInput) {
+
+        const attributesManager = handlerInput.attributesManager;
+        let sessionAttributes = attributesManager.getSessionAttributes();
+        let randomFact = sessionAttributes.lastSpeech;      
+        // Use variable used for saving previous Alexa speech in GetNewFactHandler
+
+        if (randomFact)
+        {
+            return handlerInput.responseBuilder
+            .speak(REPEAT_MESSAGE + randomFact + CONTINUE_REPROMPT) 
+            .reprompt(CONTINUE_REPROMPT)
+            .getResponse()
+        }
+        else
+        {
+            return handlerInput.responseBuilder
+            .speak(CANT_REPEAT_PROMPT)
+            .reprompt(CANT_REPEAT_REPROMPT)
+            .getResponse()            
+        }
+    }
+};
 
 
 
