@@ -110,8 +110,8 @@ const ErrorHandler = {
 const GetNewFactHandler = {
     canHandle(handlerInput) {
         const request = handlerInput.requestEnvelope.request;
-        return request.type === 'IntentRequest' ||  request.type === 'LaunchRequest'
-        && (request.intent.name === 'GetNewFactIntent' || request.intent.name === 'AnotherFunLinerFactIntent' || request.intent.name === 'AMAZON.YesIntent');
+        return request.type === 'LaunchRequest' ||  (request.type === 'IntentRequest'
+        && (request.intent.name === 'GetNewFactIntent' || request.intent.name === 'AnotherFunLinerFactIntent' || request.intent.name === 'AMAZON.YesIntent'));
         // get new fact intent or another fun liner fact intent (cf 17-268 custom interaction) or Yes intent
     },
     async handle(handlerInput) {
