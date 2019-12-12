@@ -114,7 +114,7 @@ const GetNewFactHandler = {
         && (request.intent.name === 'GetNewFactIntent' || request.intent.name === 'AnotherFunLinerFactIntent' || request.intent.name === 'AMAZON.YesIntent');
         // get new fact intent or another fun liner fact intent (cf 17-268 custom interaction) or Yes intent
     },
-    handle(handlerInput) {
+    async handle(handlerInput) {
 
         const randomFact = await getTongueTwister();
 
