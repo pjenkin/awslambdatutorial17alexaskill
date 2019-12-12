@@ -3,19 +3,19 @@ const Alexa = require('ask-sdk-core');
 const SKILL_NAME = "Fun Liners";
 const GET_FACT_MESSAGE = "Here's a tongue twister for you...";      // Alexa is to say this first
 
-const CONTINUE_REPROMPT = "Would you like another tongue twister or would you like me to repeat the last one?";
+const CONTINUE_REPROMPT = " Would you like another tongue twister or would you like me to repeat the last one?";
 const REPEAT_MESSAGE = "Sure, here it is... ";      // said on repeat intent
 
 const CANT_REPEAT_PROMPT = "There is nothing to repeat. Do you want to hear a new tongue twister?";
-const CANT_REPEAT_REPROMPT = "Do you want to hear a new tongue twister?";       // NB *re*-prompt after a while
+const CANT_REPEAT_REPROMPT = " Do you want to hear a new tongue twister?";       // NB *re*-prompt after a while
 
-const HELP_REPROMPT = "Do you want to hear a tongue twister?";
+const HELP_REPROMPT = " Do you want to hear a tongue twister?";
 const HELP_MESSAGE = "Welcome to Fun Liners. You can say, ask fun liners for a tongue twister or you can say, give me a tongue twister from fun liners!";
 
-const FALLBACK_REPROMPT = "Do you want to hear a tongue twister?";
+const FALLBACK_REPROMPT = " Do you want to hear a tongue twister?";
 const FALLBACK_MESSAGE = "The Fun Liners skill can't help you with that. It can tell you different tongue twisters. Simply say, ask fun liners for a tongue twister!";
 
-const STOP_MESSAGE = "Thank you for using Fun Liners! I look forward to seeing you again soon!";
+const STOP_MESSAGE = " Thank you for using Fun Liners! I look forward to seeing you again soon!";
 const ERROR_MESSAGE = "Sorry, an error occurred. Please try again after some time."
 
 const DATA = [
