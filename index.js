@@ -105,6 +105,39 @@ const ErrorHandler = {
 };
 
 // TODO: Add Custom Handler Definitions
+// 17-273 Writing the GetNewFact Intent handler
+// Handle both Intent requests ("tell me a fun liner") and Launch requests ("start fun liners")
+const GetNewFactHandler = {
+    canHandle(handlerInput) {
+        const request = handlerInput.requestEnvelope.request;
+        return request.type === 'IntentRequest' ||  request.type === 'LaunchRequest'
+        && (request.intent.name === 'GetNewFactIntent' || request.intent.name === 'AnotherFunLinerFactIntent' || request.intent.name === 'AMAZON.YesIntent');
+        // get new fact intent or another fun liner fact intent (cf 17-268 custom interaction) or Yes intent
+    },
+    handle(handlerInput) {
+
+        const randomFact = await getTongueTwister();
+
+        // Nicely assemble something for Alexa to say
+        const speechOutput = GET_FACT_MESSAGE + randomFact + CONTINUE_REPROMPT;
+
+        return handlerInput.responseBuilder
+        .speak(speechOutput)
+        .withSimpleCard(SKILL_NAME, randomFact)     // visual 'card' added in Alexa dashboard for the device
+        .reprompt(HELP_REPROMPT)
+        .getResponse();
+    }
+};
+
+// Bespoke function - Return random element from array of tongue twisters 17-273
+const getTongueTwister = async () => {
+    let length = DATA.length;
+    const selectedIndex = Math.floor(Math.random() * length);   // random index
+    let result = DATA[selectedIndex];
+    return result;
+} 
+
+
 
 let skill;
 
