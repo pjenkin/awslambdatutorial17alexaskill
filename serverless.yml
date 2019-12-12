@@ -11,7 +11,7 @@ provider:
   memorySize: 128
   timeout: 5
   environment:
-    ALEXA_SKILL_ID: amzn1.ask.skill.07efa09f-096b-42c8-8503-cd2b9c8ed259  # from console/Endpoint
+    ALEXA_SKILL_ID: amzn1.ask.skill.07efa09f-096b-42c8-8503-cd2b9c8ed259  # from console/Endpoint 17-271
 
 functions:
   tongueTwister:

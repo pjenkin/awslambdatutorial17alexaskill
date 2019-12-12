@@ -1,13 +1,13 @@
 const Alexa = require('ask-sdk-core');
 
 const SKILL_NAME = "Fun Liners";
-const GET_FACT_MESSAGE = "Here's a tongue twister for you...";
+const GET_FACT_MESSAGE = "Here's a tongue twister for you...";      // Alexa is to say this first
 
 const CONTINUE_REPROMPT = "Would you like another tongue twister or would you like me to repeat the last one?";
-const REPEAT_MESSAGE = "Sure, here it is... ";
+const REPEAT_MESSAGE = "Sure, here it is... ";      // said on repeat intent
 
 const CANT_REPEAT_PROMPT = "There is nothing to repeat. Do you want to hear a new tongue twister?";
-const CANT_REPEAT_REPROMPT = "Do you want to hear a new tongue twister?";
+const CANT_REPEAT_REPROMPT = "Do you want to hear a new tongue twister?";       // NB *re*-prompt after a while
 
 const HELP_REPROMPT = "Do you want to hear a tongue twister?";
 const HELP_MESSAGE = "Welcome to Fun Liners. You can say, ask fun liners for a tongue twister or you can say, give me a tongue twister from fun liners!";
@@ -23,7 +23,18 @@ const DATA = [
     "She sells sea shells at the sea shore.",
     "How much pot, could a pot roast roast, if a pot roast could roast pot.",
     "Which wristwatches are Swiss wristwatches?",
-    "How much wood would a woodchuck chuck, if a woodchuck could chuck wood?"
+    "How much wood would a woodchuck chuck, if a woodchuck could chuck wood?",
+    "Synonym for a cinnamon is a cinammon synonym",
+    "Peter Piper picked a peck of pickled peppers",
+    "Fuzzy Wuzzy was a bear. Fuzzy Wuzzy had no hair. Fuzzy Wuzzy wasn’t fuzzy, was he?",
+    "Can you can a can as a canner can can a can?",
+    "I have got a date at a quarter to eight; I’ll see you at the gate, so don’t be late",
+    "You know New York, you need New York, you know you need unique New York",
+    "I saw a kitten eating chicken in the kitchen",
+    "If a dog chews shoes, whose shoes does he choose?",
+    "I thought I thought of thinking of thanking you",
+    "I wish to wash my Irish wristwatch",
+    "Near an ear, a nearer ear, a nearly eerie ear" // copied from https://www.engvid.com/english-resource/50-tongue-twisters-improve-pronunciation/
 ];
 
 const HelpHandler = {
@@ -100,19 +111,21 @@ let skill;
 exports.handler = async (event, context) => {
     console.log("REQUEST", JSON.stringify(event));
     if (!skill) {
-        skill = Alexa.SkillBuilders.custom()
+        skill = Alexa.SkillBuilders.custom()        // Alexa Skill SDK (ask-sdk-core) used here
         .addRequestHandlers(
-            // TODO: Add Custom Handlers
+            // TODO: Add Custom Handlers            // code to be written for these Intents (both custom and built-in)
+            GetNewFactHandler,
+            RepeatHandler,
             HelpHandler,
             FallbackHandler,
             CancelAndStopIntentHandler,
             SessionEndedRequestHandler
         )
-        .addErrorHandlers(ErrorHandler)
+        .addErrorHandlers(ErrorHandler)             // error handlers here
         .create();
     }
 
-    const response = await skill.invoke(event, context);
-    console.log("RESPONSE", JSON.stringify(response));
+    const response = await skill.invoke(event, context);    // event will contain which intent is to be invoked
+    console.log("RESPONSE", JSON.stringify(response));      // NB logging for debugging
     return response;
 };
